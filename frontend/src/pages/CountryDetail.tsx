@@ -38,7 +38,7 @@ export function CountryDetailPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
-      <div className="bg-white rounded-lg border border-gray-200 p-8">
+      <div className="bg-white rounded-lg border border-gray-900 p-8">
         {/* Emoji du pays */}
         <div className="text-center mb-8">
           <div className="text-9xl mb-4">{country.emoji}</div>

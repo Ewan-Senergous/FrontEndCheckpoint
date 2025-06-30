@@ -19,7 +19,7 @@ export function CountryCard({ country }: CountryCardProps) {
       tabIndex={0}
     >
       <div className="text-6xl mb-2">{country.emoji}</div>
-      <h3 className="font-semibold text-center text-sm">{country.name}</h3>
+      <h2 className="font-semibold text-center text-sm">{country.name}</h2>
     </div>
   );
 }

@@ -157,7 +157,7 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
               value={formData.continent?.toString()}
               onValueChange={(value) => handleInputChange("continent", value)}
             >
-              <SelectTrigger>
+              <SelectTrigger aria-label="Sélectionner un continent">
                 <SelectValue placeholder="Sélectionner un continent" />
               </SelectTrigger>
               <SelectContent>

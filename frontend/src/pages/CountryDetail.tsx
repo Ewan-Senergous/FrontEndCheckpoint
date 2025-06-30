@@ -47,16 +47,16 @@ export function CountryDetailPage() {
         {/* Informations du pays */}
         <div className="space-y-6 text-center">
           <div>
-            <h1 className="text-2xl font-bold mb-2">
+            <h2 className="text-2xl font-bold mb-2">
               Name : {country.name} ({country.code})
-            </h1>
+            </h2>
           </div>
 
           {country.continent && (
             <div>
-              <h2 className="text-xl font-medium">
+              <h3 className="text-xl font-medium">
                 Continent : {country.continent.name}
-              </h2>
+              </h3>
             </div>
           )}
         </div>

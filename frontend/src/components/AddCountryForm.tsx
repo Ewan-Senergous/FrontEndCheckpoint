@@ -92,7 +92,7 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg border border-gray-200"
+      className="bg-white p-6 rounded-lg border border-gray-900"
     >
       {errors.general && (
         <div className="text-red-500 text-sm mb-4">{errors.general}</div>

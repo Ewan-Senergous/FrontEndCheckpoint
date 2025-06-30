@@ -24,6 +24,20 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Fonction pour convertir un code pays en emoji drapeau
+  const codeToFlagEmoji = (code: string): string => {
+    // Vérifier que le code a 2 caractères
+    if (code.length !== 2) return "";
+
+    // Convertir chaque lettre en indicateur régional Unicode
+    const codePoints = code
+      .toUpperCase()
+      .split("")
+      .map((char) => 127397 + char.charCodeAt(0));
+
+    return String.fromCodePoint(...codePoints);
+  };
+
   const { data: continentsData } = useQuery<{ continents: Continent[] }>(
     GET_CONTINENTS
   );
@@ -60,9 +74,7 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
     }
 
     if (!formData.emoji.trim()) {
-      newErrors.emoji = "L'emoji est requis";
-    } else if (formData.emoji.length > 4) {
-      newErrors.emoji = "L'emoji doit contenir au maximum 4 caractères";
+      newErrors.emoji = "Entrez d'abord un code pays à 2 lettres";
     }
 
     setErrors(newErrors);
@@ -83,7 +95,25 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
   };
 
   const handleInputChange = (field: keyof NewCountryInput, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const newData = { ...prev, [field]: value };
+
+      // Si on modifie le code, mettre à jour automatiquement l'emoji
+      if (field === "code") {
+        if (value.length === 2) {
+          const flagEmoji = codeToFlagEmoji(value);
+          if (flagEmoji) {
+            newData.emoji = flagEmoji;
+          }
+        } else {
+          // Effacer l'emoji si le code n'a pas 2 caractères
+          newData.emoji = "";
+        }
+      }
+
+      return newData;
+    });
+
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
     }
@@ -116,21 +146,6 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
         </div>
 
         <div className="flex-1">
-          <label className="block text-sm font-medium mb-2">Emoji</label>
-          <Input
-            value={formData.emoji}
-            onChange={(e) => handleInputChange("emoji", e.target.value)}
-            placeholder="🇫🇷"
-            aria-invalid={!!errors.emoji}
-          />
-          <div className="h-5 mt-1">
-            {errors.emoji && (
-              <div className="text-red-500 text-sm">{errors.emoji}</div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex-1">
           <label className="block text-sm font-medium mb-2">Code</label>
           <Input
             value={formData.code}
@@ -144,6 +159,23 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
           <div className="h-5 mt-1">
             {errors.code && (
               <div className="text-red-500 text-sm">{errors.code}</div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex-1">
+          <label className="block text-sm font-medium mb-2">Emoji</label>
+          <Input
+            value={formData.emoji}
+            readOnly
+            placeholder="🇫🇷 (généré automatiquement)"
+            aria-invalid={!!errors.emoji}
+            className="bg-gray-50"
+            title="L'emoji est généré automatiquement à partir du code pays"
+          />
+          <div className="h-5 mt-1">
+            {errors.emoji && (
+              <div className="text-red-500 text-sm">{errors.emoji}</div>
             )}
           </div>
         </div>

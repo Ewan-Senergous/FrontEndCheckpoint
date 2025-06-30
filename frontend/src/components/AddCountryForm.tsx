@@ -99,7 +99,7 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
       )}
 
       {/* Layout responsive : vertical sur mobile, horizontal sur desktop */}
-      <div className="flex flex-col md:flex-row md:items-end gap-4">
+      <div className="flex flex-col md:flex-row md:items-start gap-4">
         <div className="flex-1">
           <label className="block text-sm font-medium mb-2">Name</label>
           <Input
@@ -108,9 +108,11 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
             placeholder="Nom du pays"
             aria-invalid={!!errors.name}
           />
-          {errors.name && (
-            <div className="text-red-500 text-sm mt-1">{errors.name}</div>
-          )}
+          <div className="h-5 mt-1">
+            {errors.name && (
+              <div className="text-red-500 text-sm">{errors.name}</div>
+            )}
+          </div>
         </div>
 
         <div className="flex-1">
@@ -121,9 +123,11 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
             placeholder="🇫🇷"
             aria-invalid={!!errors.emoji}
           />
-          {errors.emoji && (
-            <div className="text-red-500 text-sm mt-1">{errors.emoji}</div>
-          )}
+          <div className="h-5 mt-1">
+            {errors.emoji && (
+              <div className="text-red-500 text-sm">{errors.emoji}</div>
+            )}
+          </div>
         </div>
 
         <div className="flex-1">
@@ -137,9 +141,11 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
             maxLength={3}
             aria-invalid={!!errors.code}
           />
-          {errors.code && (
-            <div className="text-red-500 text-sm mt-1">{errors.code}</div>
-          )}
+          <div className="h-5 mt-1">
+            {errors.code && (
+              <div className="text-red-500 text-sm">{errors.code}</div>
+            )}
+          </div>
         </div>
 
         {continentsData && (
@@ -165,10 +171,11 @@ export function AddCountryForm({ onSuccess }: AddCountryFormProps) {
                 ))}
               </SelectContent>
             </Select>
+            <div className="h-5 mt-1"></div>
           </div>
         )}
 
-        <div className="md:w-auto w-full">
+        <div className="md:w-auto w-full md:mt-7">
           <Button
             type="submit"
             disabled={loading}
